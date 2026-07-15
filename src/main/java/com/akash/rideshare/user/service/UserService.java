@@ -1,7 +1,11 @@
 package com.akash.rideshare.user.service;
 
+import com.akash.rideshare.auth.dto.LoginRequest;
+import com.akash.rideshare.auth.dto.LoginResponse;
 import com.akash.rideshare.auth.dto.RegisterRequest;
 import com.akash.rideshare.common.exception.EmailAlreadyExistsException;
+import com.akash.rideshare.common.exception.UserNotFoundException;
+import com.akash.rideshare.common.security.JWTService;
 import com.akash.rideshare.user.entity.User;
 import com.akash.rideshare.user.enums.Role;
 import com.akash.rideshare.user.repository.UserRepository;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JWTService jwtService;
 
     public void registerUser(RegisterRequest request) {
 
@@ -29,5 +34,20 @@ public class UserService {
                 .role(Role.Passenger)
                 .build();
         userRepository.save(user);
+    }
+
+    public LoginResponse loginUser(LoginRequest request) {
+        User user=userRepository.findByEmail(request.getEmail())
+                .orElseThrow(()-> new UserNotFoundException("Invalid email or password"));
+
+        if(!passwordEncoder.matches(request.getPassword(),user.getPassword())){
+            throw new UserNotFoundException("Invalid email or password");
+        }
+
+        String token= jwtService.generateToken(user);
+
+        return LoginResponse.builder()
+                .token(token)
+                .build();
     }
 }

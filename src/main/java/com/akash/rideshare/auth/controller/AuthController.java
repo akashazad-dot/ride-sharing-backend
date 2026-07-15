@@ -1,10 +1,11 @@
 package com.akash.rideshare.auth.controller;
+import com.akash.rideshare.auth.dto.LoginRequest;
+import com.akash.rideshare.auth.dto.LoginResponse;
 import com.akash.rideshare.auth.dto.RegisterRequest;
 import com.akash.rideshare.common.dto.ApiResponse;
 import com.akash.rideshare.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,20 @@ public class AuthController {
                 .message("User registered successfully")
                 .data(null)
                 .build();
+        return ResponseEntity.ok(response);
+
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<LoginResponse>> loginUser(@Valid @RequestBody LoginRequest request) {
+        LoginResponse loginResponse=userService.loginUser(request);
+
+        ApiResponse<LoginResponse> response= ApiResponse.<LoginResponse>builder()
+                .success(true)
+                .message("Login successful")
+                .data(loginResponse)
+                .build();
+
         return ResponseEntity.ok(response);
 
     }
