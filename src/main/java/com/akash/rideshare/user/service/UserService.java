@@ -5,11 +5,10 @@ import com.akash.rideshare.auth.dto.LoginResponse;
 import com.akash.rideshare.auth.dto.RegisterRequest;
 import com.akash.rideshare.common.exception.EmailAlreadyExistsException;
 import com.akash.rideshare.common.exception.UserNotFoundException;
-import com.akash.rideshare.common.security.JWTService;
+import com.akash.rideshare.common.security.JwtService;
 import com.akash.rideshare.user.entity.User;
 import com.akash.rideshare.user.enums.Role;
 import com.akash.rideshare.user.repository.UserRepository;
-import jdk.jshell.spi.ExecutionControl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JWTService jwtService;
+    private final JwtService jwtService;
 
     public void registerUser(RegisterRequest request) {
 
