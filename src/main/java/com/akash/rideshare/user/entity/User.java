@@ -32,9 +32,10 @@ public class User {
     private String phone;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
 
     private LocalDateTime createdDate;
-    private  LocalDateTime updatedDate;
+    private LocalDateTime updatedDate;
 
 }

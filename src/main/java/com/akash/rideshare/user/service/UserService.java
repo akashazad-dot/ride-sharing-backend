@@ -30,7 +30,7 @@ public class UserService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .phone(request.getPhone())
-                .role(Role.Passenger)
+                .role(request.getRole())
                 .build();
         userRepository.save(user);
     }

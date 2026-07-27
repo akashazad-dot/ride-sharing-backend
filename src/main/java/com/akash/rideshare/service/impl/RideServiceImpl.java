@@ -70,4 +70,8 @@ public class RideServiceImpl implements RideService {
         return rideRepository.save(ride);
     }
 
+    @Override
+    public List<Ride> getAvailableRides() {
+        return rideRepository.findByRideStatus(RideStatus.REQUESTED);
+    }
 }

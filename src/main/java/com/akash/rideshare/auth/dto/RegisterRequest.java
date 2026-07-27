@@ -1,10 +1,15 @@
 package com.akash.rideshare.auth.dto;
 
+import com.akash.rideshare.user.enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class RegisterRequest {
 
     @NotBlank
@@ -19,5 +24,8 @@ public class RegisterRequest {
 
     @NotBlank
     private String phone;
+
+    @NotNull
+    private Role role;
 
 }
