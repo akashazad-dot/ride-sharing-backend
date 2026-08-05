@@ -9,6 +9,7 @@ import com.akash.rideshare.entity.PaymentStatus;
 import com.akash.rideshare.entity.Ride;
 import com.akash.rideshare.entity.RideRepository;
 import com.akash.rideshare.entity.RideStatus;
+import com.akash.rideshare.service.FareCalculationService;
 import com.akash.rideshare.service.RideService;
 import com.akash.rideshare.user.entity.User;
 import com.akash.rideshare.user.repository.UserRepository;
@@ -17,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class RideServiceImpl implements RideService {
 
     private final RideRepository rideRepository;
     private final UserRepository userRepository;
+    private final FareCalculationService fareCalculationService;
 
     @Override
     public Ride bookRide(BookRideRequest request) {
@@ -118,6 +121,9 @@ public class RideServiceImpl implements RideService {
 
         ride.setRideStatus(RideStatus.COMPLETED);
         ride.setCompletedAt(LocalDateTime.now());
+
+        BigDecimal fare = fareCalculationService.calculateFare(ride);
+        ride.setFare(fare);
         ride.setPaymentStatus(PaymentStatus.COMPLETED);
 
         return rideRepository.save(ride);
