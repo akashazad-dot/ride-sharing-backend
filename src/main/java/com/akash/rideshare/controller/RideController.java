@@ -108,6 +108,39 @@ public class RideController{
                 .data(response)
                 .build();
         return ResponseEntity.ok(apiResponse);
+    }
 
+    @GetMapping("/my")
+    public ResponseEntity<ApiResponse<List<RideResponse>>> getMyRides() {
+        List<Ride> rides = rideService.getMyRides();
+
+        List<RideResponse> response = rides.stream()
+                .map(rideMapper::toRideResponse)
+                .toList();
+
+        ApiResponse<List<RideResponse>> apiResponse= ApiResponse.<List<RideResponse>>builder()
+                .success(true)
+                .message("Ride history fetched successfully.")
+                .data(response)
+                .build();
+
+        return ResponseEntity.ok(apiResponse);
+    }
+
+    @GetMapping("/my-assigned")
+    public ResponseEntity<ApiResponse<List<RideResponse>>> getMyAssignedRides() {
+        List<Ride> rides = rideService.getMyAssignedRides();
+
+        List<RideResponse> response =rides.stream()
+                .map(rideMapper::toRideResponse)
+                .toList();
+
+        ApiResponse<List<RideResponse>> apiResponse= ApiResponse.<List<RideResponse>>builder()
+                .success(true)
+                .message("Assigned rides fetched successfully.")
+                .data(response)
+                .build();
+
+        return ResponseEntity.ok(apiResponse);
     }
 }

@@ -1,6 +1,5 @@
 package com.akash.rideshare.entity;
 
-import com.akash.rideshare.entity.Ride;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,5 +20,9 @@ public interface RideRepository extends JpaRepository<Ride, Long> {
     );
 
     List<Ride> findByRideStatus(RideStatus rideStatus);
+
+    List<Ride> findByPassengerId(UUID passengerId);
+
+    List<Ride> findByDriverId(UUID driverId);
 }
 

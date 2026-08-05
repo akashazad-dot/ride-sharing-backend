@@ -146,6 +146,20 @@ public class RideServiceImpl implements RideService {
         return rideRepository.save(ride);
     }
 
+    @Override
+    public List<Ride> getMyRides() {
+        User passenger = getCurrentUser();
+
+        return rideRepository.findByPassengerId(passenger.getId());
+    }
+
+    @Override
+    public List<Ride> getMyAssignedRides() {
+        User driver = getCurrentUser();
+
+        return rideRepository.findByDriverId(driver.getId());
+    }
+
     private Ride getRideById(Long rideId) {
 
         return rideRepository.findById(rideId)
