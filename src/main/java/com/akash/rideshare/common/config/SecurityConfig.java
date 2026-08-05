@@ -27,11 +27,23 @@ public class SecurityConfig {
                                 "/api/v1/auth/login"
                         ).permitAll()
 
-                        .requestMatchers(HttpMethod.POST,"api/v1/rides/book")
+                        .requestMatchers(HttpMethod.POST,"/api/v1/rides/book")
                         .hasRole("PASSENGER")
 
                         .requestMatchers(HttpMethod.GET,"/api/v1/rides/available")
                         .hasRole("DRIVER")
+
+                        .requestMatchers(HttpMethod.POST,"/api/v1/rides/*/accept")
+                        .hasRole("DRIVER")
+
+                        .requestMatchers(HttpMethod.POST,"/api/v1/rides/*/start")
+                        .hasRole("DRIVER")
+
+                        .requestMatchers(HttpMethod.POST,"/api/v1/rides/*/complete")
+                        .hasRole("DRIVER")
+
+                        .requestMatchers(HttpMethod.POST,"/api/v1/rides/*/cancel")
+                        .hasAnyRole("PASSENGER","DRIVER")
 
                         .anyRequest()
                         .authenticated()

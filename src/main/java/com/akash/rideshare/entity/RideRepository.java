@@ -15,6 +15,11 @@ public interface RideRepository extends JpaRepository<Ride, Long> {
             List<RideStatus> rideStatuses
     );
 
+    Optional<Ride> findByDriverIdAndRideStatusIn(
+            UUID driverId,
+            List<RideStatus> rideStatuses
+    );
+
     List<Ride> findByRideStatus(RideStatus rideStatus);
 }
 
