@@ -51,6 +51,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/api/v1/rides/my-assigned")
                         .hasRole("DRIVER")
 
+                        .requestMatchers(HttpMethod.POST,"/api/v1/rides/*/review")
+                        .hasRole("PASSENGER")
+
                         .anyRequest()
                         .authenticated()
                 )
